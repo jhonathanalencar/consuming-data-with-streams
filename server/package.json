@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "tsx watch src/server",
+    "build": "tsc",
+    "start": "node dist/server",
     "lint:fix": "eslint . --fix --max-warnings=0"
   },
   "keywords": [],

@@ -1,6 +1,7 @@
+import { FastifyLoggerOptions } from 'fastify';
 import píno from 'pino';
 
-export const logger = píno({
+export const logger: FastifyLoggerOptions = píno({
   level: 'debug',
   transport: {
     target: 'pino-pretty',

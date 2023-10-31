@@ -1,12 +1,6 @@
-import { buildServer } from './server';
+import { FastifyHttpServer } from './infra/http-server/FastifyHttpServer';
+import { logger } from './config/logger';
 
-async function bootstrap() {
-  const { app } = await buildServer();
+const httpServer = new FastifyHttpServer(logger);
 
-  await app.listen({
-    port: 3001,
-    host: '0.0.0.0',
-  });
-}
-
-bootstrap();
+httpServer.listen(3001, '0.0.0.0');

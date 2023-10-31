@@ -1,6 +1,11 @@
-import fastify, { FastifyInstance, FastifyLoggerOptions } from 'fastify';
+import fastify, {
+  FastifyInstance,
+  FastifyLoggerOptions,
+  FastifyReply,
+  FastifyRequest,
+} from 'fastify';
 
-import { HttpServer } from './HttpServer';
+import { HttpMethods, HttpServer } from './HttpServer';
 
 export class FastifyHttpServer implements HttpServer {
   app: FastifyInstance;
@@ -9,6 +14,21 @@ export class FastifyHttpServer implements HttpServer {
     this.app = fastify({
       logger,
     });
+  }
+
+  async register(
+    method: HttpMethods,
+    url: string,
+    callback: Function
+  ): Promise<void> {
+    this.app[method](
+      url,
+      async (request: FastifyRequest, reply: FastifyReply) => {
+        const output = await callback(request.params, request.body);
+
+        return reply.send(output);
+      }
+    );
   }
 
   async listen(port: number, host: string): Promise<void> {

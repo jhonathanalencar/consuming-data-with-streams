@@ -6,3 +6,20 @@ html,
 body {
   @apply h-full;
 }
+
+.header-content-grid {
+  grid-template-areas: 'menu logo actions';
+  grid-template-columns: auto 1fr auto;
+}
+
+.header-logo {
+  grid-area: logo;
+}
+
+.header-menu {
+  grid-area: menu;
+}
+
+.header-actions {
+  grid-area: actions;
+}

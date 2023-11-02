@@ -1,23 +1,37 @@
 import Link from 'next/link';
 
-import { List } from '@/libs/phosphor';
+import { MagnifyingGlass } from '@/libs/phosphor';
+
+import { DropdownMenu } from './DropdownMenu';
 
 export function Navbar() {
   return (
-    <header className="flex h-16 w-full flex-shrink-0 items-center justify-between bg-gray-950 px-8">
-      <Link href="/">
-        <strong className="text-2xl font-bold tracking-tight text-emerald-200">
-          Ani<span className="font-black text-yellow-500">Stream</span>
-        </strong>
-      </Link>
+    <header className="shrink-0 grow-0 basis-16">
+      <div className="header-content-grid fixed left-0 right-0 z-[100] grid h-16 bg-gray-900 px-4 shadow-md">
+        <div className="header-logo flex items-center">
+          <Link href="/" className="px-4">
+            <strong className="h-full text-2xl font-bold tracking-tight text-emerald-200">
+              Ani<span className="font-black text-yellow-500">Stream</span>
+            </strong>
+          </Link>
+        </div>
 
-      <nav>
-        <ul>
-          <li>
-            <List size={32} className="text-emerald-200" />
-          </li>
-        </ul>
-      </nav>
+        <div className="header-menu flex">
+          <div className="flex items-center justify-center px-4">
+            <DropdownMenu />
+          </div>
+        </div>
+
+        <div className="header-actions flex">
+          <div className="flex items-center justify-center px-4">
+            <MagnifyingGlass
+              size={32}
+              weight="bold"
+              className="text-yellow-500"
+            />
+          </div>
+        </div>
+      </div>
     </header>
   );
 }

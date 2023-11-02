@@ -4,6 +4,7 @@ import { TransformStream, WritableStream } from 'node:stream/web';
 import { setTimeout } from 'node:timers/promises';
 import { FastifyReply } from 'fastify';
 import csvtojson from 'csvtojson';
+import { csvParseParams } from '../../config/csv';
 
 export class GetAnimesByGenre {
   async execute(filePath: string, genre: string, reply: FastifyReply) {
@@ -25,11 +26,16 @@ export class GetAnimesByGenre {
 
     try {
       await Readable.toWeb(createReadStream(filePath))
-        .pipeThrough(Transform.toWeb(csvtojson()))
+        .pipeThrough(Transform.toWeb(csvtojson(csvParseParams)))
         .pipeThrough(
           new TransformStream({
             transform(chunk, controller) {
               const data = JSON.parse(Buffer.from(chunk).toString());
+              const lowerCasedGenres = data.genres.map((genre: string) =>
+                genre.toLowerCase()
+              );
+
+              if (!lowerCasedGenres.includes(genre)) return;
 
               const mappedData = {
                 id: data.anime_id,

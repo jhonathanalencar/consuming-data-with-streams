@@ -51,7 +51,7 @@ export class ConsumeDataset {
         .pipeTo(
           new WritableStream({
             async write(chunk) {
-              // await setTimeout(200);
+              await setTimeout(200);
               items++;
               reply.raw.write(chunk);
             },

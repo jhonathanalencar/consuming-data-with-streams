@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { Merriweather_Sans } from 'next/font/google';
 
-import './globals.css';
 import { Navbar } from '@/components/Navbar';
+
+import './globals.css';
 
 const inter = Merriweather_Sans({ subsets: ['latin'] });
 
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        {children}
+        <div className="flex h-full flex-col">
+          <Navbar />
+          <main className="flex-1">{children}</main>
+        </div>
       </body>
     </html>
   );

@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
-import { AnimeCard } from './AnimeCard';
+import { useExecuteOnMount } from '@/hooks/useExecuteOnMount';
+
+import { AnimeList } from '@/components/AnimeList';
 
 async function consumeDataset(signal: AbortSignal) {
   const response = await fetch('http://localhost:3001', {
@@ -38,22 +40,10 @@ function parseNDJSON() {
   });
 }
 
-export type Anime = {
-  id: string;
-  title: string;
-  synopsis: string;
-  anime_url: string;
-  main_pic: string;
-  num_episodes: string;
-  genres: string[];
-  pics: string[];
-};
-
 let abortController = new AbortController();
 
 export default function Home() {
   const [data, setData] = useState<Anime[]>([]);
-  const isMountedRef = useRef(false);
 
   async function startConsume() {
     try {
@@ -69,9 +59,11 @@ export default function Home() {
     return new WritableStream({
       write(data) {
         ++count;
-        setData((prev) => {
-          return [...prev, data];
-        });
+        if (count <= 30) {
+          setData((prev) => {
+            return [...prev, data];
+          });
+        }
       },
       abort(reason) {
         console.log('aborted', reason);
@@ -79,20 +71,13 @@ export default function Home() {
     });
   }
 
-  useEffect(() => {
-    if (isMountedRef.current) return;
-
-    startConsume();
-
-    return () => {
-      isMountedRef.current = true;
-    };
-  }, []);
+  useExecuteOnMount(startConsume);
 
   return (
-    <section>
-      <h1>Mikasa</h1>
-      <AnimeCard data={data} />
+    <section className="h-full w-full bg-zinc-950">
+      <div className="">
+        <AnimeList animes={data} />
+      </div>
     </section>
   );
 }

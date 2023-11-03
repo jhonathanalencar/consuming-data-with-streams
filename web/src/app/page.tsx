@@ -3,9 +3,10 @@
 import { useState } from 'react';
 
 import { useExecuteOnMount } from '@/hooks/useExecuteOnMount';
+import { startConsume } from '@/utils/consumeDatasetStream';
 
 import { AnimeList } from '@/components/AnimeList';
-import { startConsume } from '@/utils/consumeDatasetStream';
+import { Section } from '@/components/Section';
 
 let abortController = new AbortController();
 
@@ -34,8 +35,12 @@ export default function HomePage() {
   );
 
   return (
-    <section className="h-full w-full bg-zinc-950">
-      <AnimeList animes={animes} />
-    </section>
+    <Section.Root>
+      <Section.Container>
+        <Section.Title>Most Popular</Section.Title>
+
+        <AnimeList animes={animes} />
+      </Section.Container>
+    </Section.Root>
   );
 }

@@ -38,7 +38,7 @@ export function AnimeCard({ anime }: AnimeCardProps) {
         </span>
 
         <div
-          className="animate-fade absolute inset-0 hidden h-full w-full rounded bg-contain bg-center group-hover:block group-focus-visible:block"
+          className="absolute inset-0 hidden h-full w-full animate-fade rounded bg-contain bg-center group-hover:block group-focus-visible:block"
           style={{
             backgroundImage: `url('${imageUrlWithFallback}')`,
           }}
@@ -51,7 +51,7 @@ export function AnimeCard({ anime }: AnimeCardProps) {
               {anime.title}
             </span>
             <span className="text-sm font-medium text-zinc-400">
-              {anime.num_episodes} Episodes
+              {anime.num_episodes || '0'} Episodes
             </span>
             <p className="line-clamp-5 text-sm font-normal leading-snug text-zinc-300">
               {anime.synopsis}

@@ -8,6 +8,7 @@ import { startConsume } from '@/utils/consumeDatasetStream';
 import { ANIME_GENRES, ANIME_GENRES_ICON } from '@/constants/animeGenres';
 
 import { AnimeList } from '@/components/AnimeList';
+import { Section } from '@/components/Section';
 
 interface AnimesByGenrePageProps {
   params: { genre: string };
@@ -51,15 +52,17 @@ export default function AnimesByGenrePage({
   );
 
   return (
-    <section className="h-full w-full bg-zinc-950">
-      <div className="flex items-center gap-2 p-4">
-        {ANIME_GENRES_ICON[genre]}
-        <h1 className="text-2xl font-black text-zinc-100">
-          {ANIME_GENRES[genre]}
-        </h1>
-      </div>
+    <Section.Root>
+      <Section.Container>
+        <Section.Title>
+          <div className="flex items-center gap-2">
+            {ANIME_GENRES_ICON[genre]}
+            {ANIME_GENRES[genre]}
+          </div>
+        </Section.Title>
 
-      <AnimeList animes={animes} />
-    </section>
+        <AnimeList animes={animes} />
+      </Section.Container>
+    </Section.Root>
   );
 }

@@ -6,8 +6,8 @@ interface AnimeListProps {
 
 export function AnimeList({ animes }: AnimeListProps) {
   return (
-    <section className="w-full p-4">
-      <div className="grid-cols-list grid w-full place-items-center gap-4">
+    <section className="w-full">
+      <div className="grid w-full grid-cols-list place-items-center gap-4">
         {animes.map((anime) => {
           return <AnimeCard key={anime.id} anime={anime} />;
         })}

@@ -4,7 +4,7 @@ import { useExecuteOnMount } from '@/hooks/useExecuteOnMount';
 import { startConsume } from '@/utils/consumeDatasetStream';
 
 import { AnimeCard } from '@/components/AnimeCard';
-import { Carousel } from '@/components/Carousel';
+import { Carousel } from '@/app/(home)/components/Carousel';
 import { Section } from '@/components/Section';
 
 const abortController = new AbortController();

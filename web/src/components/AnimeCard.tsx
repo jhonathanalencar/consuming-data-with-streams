@@ -1,7 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { useImageUrlWithFallback } from '@/hooks/useImageUrlWithFallback';
-import Link from 'next/link';
 
 interface AnimeCardProps {
   anime: Anime;

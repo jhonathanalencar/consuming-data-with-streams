@@ -1,8 +1,8 @@
 'use client';
 
 import { Section } from '@/components/Section';
-import { MostPopularAnimesCarousel } from './(home)/components/MostPopularAnimesCarousel';
-import { TopAnimesCarousel } from './(home)/components/TopAnimesCarousel';
+import { MostPopularAnimesCarousel } from './components/MostPopularAnimesCarousel';
+import { TopAnimesCarousel } from './components/TopAnimesCarousel';
 
 export default function HomePage() {
   return (

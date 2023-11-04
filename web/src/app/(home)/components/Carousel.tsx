@@ -47,14 +47,23 @@ export function Carousel({ slides }: CarouselProps) {
     <div className="relative flex w-full px-4">
       <div className="w-full" ref={emblaRef}>
         <div className="grid auto-cols-max grid-flow-col gap-2 sm:gap-4">
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className="relative min-w-0 max-w-full flex-shrink-0 flex-grow-0 basis-full"
-            >
-              {slide}
-            </div>
-          ))}
+          {emblaApi
+            ? slides.map((slide, index) => (
+                <div
+                  key={index}
+                  className="relative min-w-0 max-w-full flex-shrink-0 flex-grow-0 basis-full"
+                >
+                  {slide}
+                </div>
+              ))
+            : Array(20)
+                .fill(0)
+                .map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-[304px] w-[192px] animate-pulse rounded bg-zinc-800"
+                  />
+                ))}
         </div>
       </div>
 

@@ -10,7 +10,7 @@ import { Section } from '@/components/Section';
 
 let abortController = new AbortController();
 
-export default function TopAnimesPage() {
+export default function NewAnimesPage() {
   const [animes, setAnimes] = useState<Anime[]>([]);
 
   function updateState() {
@@ -31,7 +31,7 @@ export default function TopAnimesPage() {
 
   useExecuteOnMount(() =>
     startConsume(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/top?timeout=50`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/new?timeout=200`,
       abortController.signal,
       updateState
     )
@@ -40,7 +40,7 @@ export default function TopAnimesPage() {
   return (
     <Section.Root>
       <Section.Container>
-        <Section.Title>Top</Section.Title>
+        <Section.Title>New</Section.Title>
 
         <AnimeList animes={animes} />
       </Section.Container>

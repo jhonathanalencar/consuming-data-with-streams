@@ -59,15 +59,27 @@ export class DatasetController {
         body: any,
         reply: any
       ) => {
-        await this.getTopAnimes.execute(this.filePath, reply);
+        await this.getTopAnimes.execute(
+          this.filePath,
+          reply,
+          params.query.timeout
+        );
       }
     );
 
     this.httpServer.register(
       'get',
       '/animes/new',
-      async (params: any, body: any, reply: any) => {
-        await this.getNewestAnimes.execute(this.filePath, reply);
+      async (
+        params: { query: { timeout?: string } },
+        body: any,
+        reply: any
+      ) => {
+        await this.getNewestAnimes.execute(
+          this.filePath,
+          reply,
+          params.query.timeout
+        );
       }
     );
   }

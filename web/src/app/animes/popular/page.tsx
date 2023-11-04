@@ -1,29 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { notFound } from 'next/navigation';
 
 import { useExecuteOnMount } from '@/hooks/useExecuteOnMount';
 import { startConsume } from '@/utils/consumeDatasetStream';
-import { ANIME_GENRES, ANIME_GENRES_ICON } from '@/constants/animeGenres';
 
 import { AnimeList } from '@/components/AnimeList';
 import { Section } from '@/components/Section';
 
-interface AnimesByGenrePageProps {
-  params: { genre: string };
-}
-
 let abortController = new AbortController();
 
-export default function AnimesByGenrePage({
-  params: { genre },
-}: AnimesByGenrePageProps) {
+export default function PopularAnimesPage() {
   const [animes, setAnimes] = useState<Anime[]>([]);
-
-  if (!ANIME_GENRES[genre]) {
-    notFound();
-  }
 
   function updateState() {
     let count = 0;
@@ -31,11 +19,9 @@ export default function AnimesByGenrePage({
     return new WritableStream({
       write(data) {
         ++count;
-        if (count <= 30) {
-          setAnimes((prev) => {
-            return [...prev, data];
-          });
-        }
+        setAnimes((prev) => {
+          return [...prev, data];
+        });
       },
       abort(reason) {
         console.log('aborted', reason);
@@ -45,7 +31,7 @@ export default function AnimesByGenrePage({
 
   useExecuteOnMount(() =>
     startConsume(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/${genre}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/popular?timeout=50`,
       abortController.signal,
       updateState
     )
@@ -54,12 +40,7 @@ export default function AnimesByGenrePage({
   return (
     <Section.Root>
       <Section.Container>
-        <Section.Title>
-          <div className="flex items-center gap-2">
-            {ANIME_GENRES_ICON[genre]}
-            {ANIME_GENRES[genre]}
-          </div>
-        </Section.Title>
+        <Section.Title>Popular</Section.Title>
 
         <AnimeList animes={animes} />
       </Section.Container>

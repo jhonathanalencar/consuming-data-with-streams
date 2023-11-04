@@ -24,7 +24,11 @@ export class FastifyHttpServer implements HttpServer {
     this.app[method](
       url,
       async (request: FastifyRequest, reply: FastifyReply) => {
-        const output = await callback(request.params, request.body, reply);
+        const output = await callback(
+          request.params && { query: request.query },
+          request.body,
+          reply
+        );
 
         if (reply.sent || reply.raw.closed) {
           return;

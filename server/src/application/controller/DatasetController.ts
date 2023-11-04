@@ -38,15 +38,27 @@ export class DatasetController {
     this.httpServer.register(
       'get',
       '/animes/popular',
-      async (params: any, body: any, reply: any) => {
-        await this.getMostPopularAnimes.execute(this.filePath, reply);
+      async (
+        params: { query: { timeout?: string } },
+        body: any,
+        reply: any
+      ) => {
+        await this.getMostPopularAnimes.execute(
+          this.filePath,
+          reply,
+          params.query.timeout
+        );
       }
     );
 
     this.httpServer.register(
       'get',
       '/animes/top',
-      async (params: any, body: any, reply: any) => {
+      async (
+        params: { query: { timeout?: string } },
+        body: any,
+        reply: any
+      ) => {
         await this.getTopAnimes.execute(this.filePath, reply);
       }
     );

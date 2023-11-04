@@ -4,6 +4,7 @@ import { HttpServer } from '../../infra/http-server/HttpServer';
 import { ConsumeDataset } from '../usecase/ConsumeDataset';
 import { GetAnimesByGenre } from '../usecase/GetAnimesByGenre';
 import { GetMostPopularAnimes } from '../usecase/GetMostPopularAnimes';
+import { GetTopAnimes } from '../usecase/GetTopAnimes';
 
 export class DatasetController {
   constructor(
@@ -11,7 +12,8 @@ export class DatasetController {
     readonly filePath: string,
     readonly consumeDataset: ConsumeDataset,
     readonly getAnimesByGenre: GetAnimesByGenre,
-    readonly getMostPopularAnimes: GetMostPopularAnimes
+    readonly getMostPopularAnimes: GetMostPopularAnimes,
+    readonly getTopAnimes: GetTopAnimes
   ) {
     this.httpServer.register(
       'get',
@@ -36,6 +38,14 @@ export class DatasetController {
       '/animes/popular',
       async (params: any, body: any, reply: any) => {
         await this.getMostPopularAnimes.execute(this.filePath, reply);
+      }
+    );
+
+    this.httpServer.register(
+      'get',
+      '/animes/top',
+      async (params: any, body: any, reply: any) => {
+        await this.getTopAnimes.execute(this.filePath, reply);
       }
     );
   }

@@ -6,6 +6,7 @@ import { startConsume } from '@/utils/consumeDatasetStream';
 import { AnimeCard } from '@/components/AnimeCard';
 import { Carousel } from '@/app/(home)/components/Carousel';
 import { Section } from '@/components/Section';
+import { ViewAllButton } from './ViewAllButton';
 
 const abortController = new AbortController();
 
@@ -48,7 +49,11 @@ export function MostPopularAnimesCarousel({
   return (
     <>
       <Section.Container>
-        <Section.Title>Most Popular</Section.Title>
+        <div className="flex justify-between">
+          <Section.Title>Most Popular</Section.Title>
+
+          <ViewAllButton href="/animes/popular" />
+        </div>
       </Section.Container>
 
       <Carousel

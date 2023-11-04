@@ -6,6 +6,7 @@ import { startConsume } from '@/utils/consumeDatasetStream';
 import { AnimeCard } from '@/components/AnimeCard';
 import { Carousel } from '@/app/(home)/components/Carousel';
 import { Section } from '@/components/Section';
+import { ViewAllButton } from './ViewAllButton';
 
 const abortController = new AbortController();
 
@@ -46,7 +47,11 @@ export function TopAnimesCarousel({ slidesAmount }: TopAnimesCarouselProps) {
   return (
     <>
       <Section.Container>
-        <Section.Title>Top Picks for You</Section.Title>
+        <div className="flex justify-between">
+          <Section.Title>Top Picks for You</Section.Title>
+
+          <ViewAllButton href="/animes/top" />
+        </div>
       </Section.Container>
 
       <Carousel

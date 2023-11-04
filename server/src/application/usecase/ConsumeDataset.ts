@@ -34,7 +34,7 @@ export class ConsumeDataset {
               const data = JSON.parse(Buffer.from(chunk).toString());
 
               if (data.popularity_rank > 20) return;
-              console.log(data);
+
               const mappedData = {
                 id: data.anime_id,
                 title: data.title,

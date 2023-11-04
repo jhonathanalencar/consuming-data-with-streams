@@ -5,8 +5,9 @@ import { useState } from 'react';
 import { useExecuteOnMount } from '@/hooks/useExecuteOnMount';
 import { startConsume } from '@/utils/consumeDatasetStream';
 
-import { AnimeList } from '@/components/AnimeList';
 import { Section } from '@/components/Section';
+import { Carousel } from '@/components/Carousel';
+import { AnimeCard } from '@/components/AnimeCard';
 
 let abortController = new AbortController();
 
@@ -18,7 +19,7 @@ export default function HomePage() {
     return new WritableStream({
       write(data) {
         ++count;
-        if (count <= 30) {
+        if (count <= 20) {
           setAnimes((prev) => {
             return [...prev, data];
           });
@@ -35,12 +36,16 @@ export default function HomePage() {
   );
 
   return (
-    <Section.Root>
+    <Section.Root className="overflow-x-hidden">
       <Section.Container>
         <Section.Title>Most Popular</Section.Title>
-
-        <AnimeList animes={animes} />
       </Section.Container>
+
+      <Carousel
+        slides={animes.map((anime) => (
+          <AnimeCard key={anime.id} anime={anime} />
+        ))}
+      />
     </Section.Root>
   );
 }

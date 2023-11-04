@@ -43,7 +43,7 @@ export function AnimeCard({ anime }: AnimeCardProps) {
             backgroundImage: `url('${imageUrlWithFallback}')`,
           }}
         >
-          <div className="flex h-full w-full flex-col gap-2 bg-gray-900/90 p-2">
+          <div className="relative flex h-full w-full flex-col gap-2 bg-gray-900/90 p-2">
             <span
               title={anime.title}
               className="block truncate text-center font-semibold text-zinc-100"

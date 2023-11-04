@@ -3,12 +3,15 @@ import { join } from 'node:path';
 import { HttpServer } from '../../infra/http-server/HttpServer';
 import { ConsumeDataset } from '../usecase/ConsumeDataset';
 import { GetAnimesByGenre } from '../usecase/GetAnimesByGenre';
+import { GetMostPopularAnimes } from '../usecase/GetMostPopularAnimes';
 
 export class DatasetController {
   constructor(
     readonly httpServer: HttpServer,
+    readonly filePath: string,
     readonly consumeDataset: ConsumeDataset,
-    readonly getAnimesByGenre: GetAnimesByGenre
+    readonly getAnimesByGenre: GetAnimesByGenre,
+    readonly getMostPopularAnimes: GetMostPopularAnimes
   ) {
     this.httpServer.register(
       'get',
@@ -24,8 +27,15 @@ export class DatasetController {
       'get',
       '/animes/:genre',
       async (params: { genre: string }, body: any, reply: any) => {
-        const filePath = join(__dirname, '../..', 'assets', 'anime.csv');
-        await getAnimesByGenre.execute(filePath, params.genre, reply);
+        await this.getAnimesByGenre.execute(this.filePath, params.genre, reply);
+      }
+    );
+
+    this.httpServer.register(
+      'get',
+      '/animes/popular',
+      async (params: any, body: any, reply: any) => {
+        await this.getMostPopularAnimes.execute(this.filePath, reply);
       }
     );
   }

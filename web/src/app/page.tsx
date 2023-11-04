@@ -32,7 +32,11 @@ export default function HomePage() {
   }
 
   useExecuteOnMount(() =>
-    startConsume('http://localhost:3001', abortController.signal, updateState)
+    startConsume(
+      'http://localhost:3001/animes/popular',
+      abortController.signal,
+      updateState
+    )
   );
 
   return (

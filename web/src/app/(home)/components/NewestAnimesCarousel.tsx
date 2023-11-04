@@ -9,11 +9,13 @@ import { Section } from '@/components/Section';
 
 const abortController = new AbortController();
 
-interface TopAnimesCarouselProps {
+interface NewestAnimesCarouselProps {
   slidesAmount: number;
 }
 
-export function TopAnimesCarousel({ slidesAmount }: TopAnimesCarouselProps) {
+export function NewestAnimesCarousel({
+  slidesAmount,
+}: NewestAnimesCarouselProps) {
   const [animes, setAnimes] = useState<Anime[]>([]);
 
   function updateState() {
@@ -37,7 +39,7 @@ export function TopAnimesCarousel({ slidesAmount }: TopAnimesCarouselProps) {
 
   useExecuteOnMount(() =>
     startConsume(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/top`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/new`,
       abortController.signal,
       updateState
     )
@@ -46,7 +48,7 @@ export function TopAnimesCarousel({ slidesAmount }: TopAnimesCarouselProps) {
   return (
     <>
       <Section.Container>
-        <Section.Title>Top Picks for You</Section.Title>
+        <Section.Title>New</Section.Title>
       </Section.Container>
 
       <Carousel

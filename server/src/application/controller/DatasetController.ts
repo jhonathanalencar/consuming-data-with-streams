@@ -30,8 +30,17 @@ export class DatasetController {
     this.httpServer.register(
       'get',
       '/animes/:genre',
-      async (params: { genre: string }, body: any, reply: any) => {
-        await this.getAnimesByGenre.execute(this.filePath, params.genre, reply);
+      async (
+        params: { genre: string; query: { timeout?: string } },
+        body: any,
+        reply: any
+      ) => {
+        await this.getAnimesByGenre.execute(
+          this.filePath,
+          reply,
+          params.genre,
+          params.query.timeout
+        );
       }
     );
 

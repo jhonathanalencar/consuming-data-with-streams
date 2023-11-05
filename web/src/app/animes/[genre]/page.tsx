@@ -45,7 +45,10 @@ export default function AnimesByGenrePage({
 
   useExecuteOnMount(() =>
     startConsume(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/${genre}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/${genre.replaceAll(
+        '-',
+        ' '
+      )}?timeout=200`,
       abortController.signal,
       updateState
     )

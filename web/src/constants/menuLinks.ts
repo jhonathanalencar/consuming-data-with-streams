@@ -12,3 +12,21 @@ export const menuLinks = [
     text: 'Top',
   },
 ];
+
+export const genresSubmenuLinks = [
+  'action',
+  'adventure',
+  'comedy',
+  'slice-of-life',
+  'sci-fi',
+  'sports',
+  'fantasy',
+  'drama',
+  'music',
+  'romance',
+  'supernatural',
+  'suspense',
+  'seinen',
+  'shoujo',
+  'shounen',
+];

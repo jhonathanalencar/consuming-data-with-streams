@@ -25,7 +25,7 @@ export class FastifyHttpServer implements HttpServer {
       url,
       async (request: FastifyRequest, reply: FastifyReply) => {
         const output = await callback(
-          request.params && { query: request.query },
+          { ...(request.params as {}), query: request.query },
           request.body,
           reply
         );

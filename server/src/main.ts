@@ -21,6 +21,7 @@ const getTopAnimes = new GetTopAnimes();
 const getNewestAnimes = new GetNewestAnimes();
 
 const filePath = join(__dirname, 'assets', 'anime.csv');
+
 new DatasetController(
   httpServer,
   filePath,

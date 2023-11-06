@@ -28,7 +28,9 @@ export class DatasetController {
         await searchAnimesByText.execute(
           this.filePath,
           reply,
-          params.query.q || ''
+          params.query.q || '',
+          params.query.timeout,
+          params.query.skip
         );
       }
     );

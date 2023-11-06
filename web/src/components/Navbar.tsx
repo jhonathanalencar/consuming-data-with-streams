@@ -27,6 +27,7 @@ export function Navbar() {
             <div className="flex items-center justify-center">
               <Link
                 href="/search"
+                aria-label="Search"
                 className="group rounded-md border-2 border-transparent px-2 py-1 outline-none transition-colors focus-visible:border-yellow-500"
               >
                 <MagnifyingGlass

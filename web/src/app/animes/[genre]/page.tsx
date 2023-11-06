@@ -30,7 +30,7 @@ export default function AnimesByGenrePage({
   const URL = `${process.env.NEXT_PUBLIC_API_URL}/animes/${genre.replaceAll(
     '-',
     ' '
-  )}?timeout=200&skip=${skip}`;
+  )}?timeout=100&skip=${skip}`;
 
   function updateState() {
     return new WritableStream({

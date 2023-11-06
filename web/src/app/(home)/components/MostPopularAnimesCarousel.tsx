@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useExecuteOnMount } from '@/hooks/useExecuteOnMount';
 import { startConsume, stopConsume } from '@/utils/consumeDatasetStream';
@@ -8,20 +8,20 @@ import { Carousel } from '@/app/(home)/components/Carousel';
 import { Section } from '@/components/Section';
 import { ViewAllButton } from './ViewAllButton';
 
-const abortController = new AbortController();
-
 interface MostPopularAnimesCarouselProps {
   slidesAmount: number;
 }
 
+let count = 0;
+
 export function MostPopularAnimesCarousel({
   slidesAmount,
 }: MostPopularAnimesCarouselProps) {
+  let abortController = new AbortController();
+
   const [animes, setAnimes] = useState<Anime[]>([]);
 
   function updateState() {
-    let count = 0;
-
     return new WritableStream({
       write(data) {
         ++count;
@@ -49,6 +49,10 @@ export function MostPopularAnimesCarousel({
       updateState
     )
   );
+
+  useEffect(() => {
+    count = 0;
+  }, []);
 
   return (
     <>

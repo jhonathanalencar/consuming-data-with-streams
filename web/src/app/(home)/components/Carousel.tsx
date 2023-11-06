@@ -46,7 +46,7 @@ export function Carousel({ slides }: CarouselProps) {
   return (
     <div className="relative flex w-full px-4">
       <div className="w-full" ref={emblaRef}>
-        <div className="grid auto-cols-max grid-flow-col gap-2 sm:gap-4">
+        <div className="grid min-h-[304px] auto-cols-max grid-flow-col gap-2 sm:gap-4">
           {emblaApi
             ? slides.map((slide, index) => (
                 <div

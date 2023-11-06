@@ -17,7 +17,11 @@ export default function SearchPage() {
     <Section.Root className="pt-0">
       <SearchBar query={query} setQuery={setQuery} />
 
-      <SearchResults query={debouncedQuery} />
+      {query ? (
+        <div className="mt-8">
+          <SearchResults query={debouncedQuery} />
+        </div>
+      ) : null}
     </Section.Root>
   );
 }

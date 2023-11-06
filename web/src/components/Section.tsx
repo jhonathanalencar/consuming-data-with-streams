@@ -1,4 +1,5 @@
 import { ComponentProps, ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 interface SectionRootProps extends ComponentProps<'section'> {
   children: ReactNode;
@@ -7,7 +8,7 @@ interface SectionRootProps extends ComponentProps<'section'> {
 function SectionRoot({ children, className, ...rest }: SectionRootProps) {
   return (
     <section
-      className={`h-full w-full bg-zinc-950 pb-12 pt-4 ${className}`}
+      className={twMerge('h-full w-full bg-zinc-950 pb-12 pt-4', className)}
       {...rest}
     >
       {children}
@@ -25,7 +26,7 @@ function SectionContainer({
   ...rest
 }: SectionContainerProps) {
   return (
-    <div className={`container mx-auto px-4 ${className}`} {...rest}>
+    <div className={twMerge('container mx-auto px-4', className)} {...rest}>
       {children}
     </div>
   );
@@ -38,7 +39,10 @@ interface SectionTitleProps extends ComponentProps<'h1'> {
 function SectionTitle({ children, className, ...rest }: SectionTitleProps) {
   return (
     <h1
-      className={`mb-4 text-2xl font-black tracking-wide text-zinc-100 ${className}`}
+      className={twMerge(
+        'mb-4 text-2xl font-black tracking-wide text-zinc-100',
+        className
+      )}
       {...rest}
     >
       {children}

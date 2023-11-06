@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useExecuteOnMount } from '@/hooks/useExecuteOnMount';
-import { startConsume } from '@/utils/consumeDatasetStream';
+import { startConsume, stopConsume } from '@/utils/consumeDatasetStream';
 
 import { AnimeCard } from '@/components/AnimeCard';
 import { Carousel } from '@/app/(home)/components/Carousel';
@@ -23,6 +23,10 @@ export function TopAnimesCarousel({ slidesAmount }: TopAnimesCarouselProps) {
     return new WritableStream({
       write(data) {
         ++count;
+
+        if (count > slidesAmount) {
+          stopConsume(abortController);
+        }
 
         if (count <= slidesAmount) {
           setAnimes((prev) => {

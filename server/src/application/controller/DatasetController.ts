@@ -49,14 +49,15 @@ export class DatasetController {
       'get',
       '/animes/popular',
       async (
-        params: { query: { timeout?: string } },
+        params: { query: { timeout?: string; skip: number } },
         body: any,
         reply: any
       ) => {
         await this.getMostPopularAnimes.execute(
           this.filePath,
           reply,
-          params.query.timeout
+          params.query.timeout,
+          params.query.skip
         );
       }
     );

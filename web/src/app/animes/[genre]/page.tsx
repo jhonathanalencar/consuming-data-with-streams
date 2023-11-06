@@ -9,6 +9,7 @@ import { ANIME_GENRES, ANIME_GENRES_ICON } from '@/constants/animeGenres';
 
 import { Section } from '@/components/Section';
 import { AnimeCard } from '@/components/AnimeCard';
+import { AnimeList } from '@/components/AnimeList';
 
 interface AnimesByGenrePageProps {
   params: { genre: string };
@@ -104,17 +105,7 @@ export default function AnimesByGenrePage({
         </Section.Title>
 
         <section className="w-full">
-          <div className="grid w-full grid-cols-list place-items-center gap-4">
-            {animes.map((anime, index) => {
-              if (animes.length === index + 1) {
-                return (
-                  <AnimeCard key={anime.id} ref={lastAnimeRef} anime={anime} />
-                );
-              }
-
-              return <AnimeCard key={anime.id} anime={anime} />;
-            })}
-          </div>
+          <AnimeList animes={animes} lastAnimeRef={lastAnimeRef} />
         </section>
       </Section.Container>
     </Section.Root>

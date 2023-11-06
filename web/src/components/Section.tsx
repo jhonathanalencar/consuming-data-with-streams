@@ -8,7 +8,7 @@ interface SectionRootProps extends ComponentProps<'section'> {
 function SectionRoot({ children, className, ...rest }: SectionRootProps) {
   return (
     <section
-      className={twMerge('h-full w-full bg-zinc-950 pb-16 pt-4', className)}
+      className={twMerge('h-full w-full bg-zinc-950 pb-16 pt-16', className)}
       {...rest}
     >
       {children}

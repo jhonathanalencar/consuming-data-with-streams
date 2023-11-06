@@ -49,7 +49,7 @@ export class DatasetController {
       'get',
       '/animes/popular',
       async (
-        params: { query: { timeout?: string; skip: number } },
+        params: { query: { timeout?: string; skip?: number } },
         body: any,
         reply: any
       ) => {
@@ -66,14 +66,15 @@ export class DatasetController {
       'get',
       '/animes/top',
       async (
-        params: { query: { timeout?: string } },
+        params: { query: { timeout?: string; skip?: number } },
         body: any,
         reply: any
       ) => {
         await this.getTopAnimes.execute(
           this.filePath,
           reply,
-          params.query.timeout
+          params.query.timeout,
+          params.query.skip
         );
       }
     );
@@ -82,7 +83,7 @@ export class DatasetController {
       'get',
       '/animes/new',
       async (
-        params: { query: { timeout?: string; skip: number } },
+        params: { query: { timeout?: string; skip?: number } },
         body: any,
         reply: any
       ) => {

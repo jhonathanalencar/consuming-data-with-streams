@@ -1,17 +1,17 @@
-import { join } from 'node:path';
-
 import { HttpServer } from '../../infra/http-server/HttpServer';
 import { ConsumeDataset } from '../usecase/ConsumeDataset';
 import { GetAnimesByGenre } from '../usecase/GetAnimesByGenre';
 import { GetMostPopularAnimes } from '../usecase/GetMostPopularAnimes';
 import { GetTopAnimes } from '../usecase/GetTopAnimes';
 import { GetNewestAnimes } from '../usecase/GetNewestAnimes';
+import { SearchAnimesByText } from '../usecase/SearchAnimesByText';
 
 export class DatasetController {
   constructor(
     readonly httpServer: HttpServer,
     readonly filePath: string,
     readonly consumeDataset: ConsumeDataset,
+    readonly searchAnimesByText: SearchAnimesByText,
     readonly getAnimesByGenre: GetAnimesByGenre,
     readonly getMostPopularAnimes: GetMostPopularAnimes,
     readonly getTopAnimes: GetTopAnimes,
@@ -19,11 +19,34 @@ export class DatasetController {
   ) {
     this.httpServer.register(
       'get',
-      '/',
-      async (params: any, body: any, reply: any) => {
-        const filePath = join(__dirname, '../..', 'assets', 'anime.csv');
+      '/search',
+      async (
+        params: { query: { q?: string; timeout?: string; skip?: number } },
+        body: any,
+        reply: any
+      ) => {
+        await searchAnimesByText.execute(
+          this.filePath,
+          reply,
+          params.query.q || ''
+        );
+      }
+    );
 
-        await consumeDataset.execute(filePath, reply);
+    this.httpServer.register(
+      'get',
+      '/animes',
+      async (
+        params: { query: { timeout?: string; skip?: number } },
+        body: any,
+        reply: any
+      ) => {
+        await consumeDataset.execute(
+          this.filePath,
+          reply,
+          params.query.timeout,
+          params.query.skip
+        );
       }
     );
 

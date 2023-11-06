@@ -8,7 +8,6 @@ import { startConsume, stopConsume } from '@/utils/consumeDatasetStream';
 import { ANIME_GENRES, ANIME_GENRES_ICON } from '@/constants/animeGenres';
 
 import { Section } from '@/components/Section';
-import { AnimeCard } from '@/components/AnimeCard';
 import { AnimeList } from '@/components/AnimeList';
 
 interface AnimesByGenrePageProps {

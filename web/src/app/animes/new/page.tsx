@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useExecuteOnMount } from '@/hooks/useExecuteOnMount';
 import { startConsume, stopConsume } from '@/utils/consumeDatasetStream';
@@ -77,6 +77,10 @@ export default function NewAnimesPage() {
       updateState
     )
   );
+
+  useEffect(() => {
+    count = 0;
+  }, []);
 
   return (
     <Section.Root>

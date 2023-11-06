@@ -31,7 +31,7 @@ export default function TopAnimesPage() {
 
   useExecuteOnMount(() =>
     startConsume(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/top?timeout=50`,
+      `${process.env.NEXT_PUBLIC_API_URL}/animes/top?timeout=50`,
       abortController.signal,
       updateState
     )

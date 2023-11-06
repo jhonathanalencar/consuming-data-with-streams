@@ -31,7 +31,7 @@ export class DatasetController {
       'get',
       '/animes/:genre',
       async (
-        params: { genre: string; query: { timeout?: string } },
+        params: { genre: string; query: { timeout?: string; skip: number } },
         body: any,
         reply: any
       ) => {
@@ -39,7 +39,8 @@ export class DatasetController {
           this.filePath,
           reply,
           params.genre,
-          params.query.timeout
+          params.query.timeout,
+          params.query.skip
         );
       }
     );

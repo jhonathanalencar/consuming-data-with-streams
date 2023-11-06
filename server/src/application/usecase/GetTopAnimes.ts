@@ -8,6 +8,7 @@ export class GetTopAnimes {
       filePath,
       reply,
       Number(timeout) || 0,
+      0,
       (data: any) => {
         return data.score_count < 350000;
       }

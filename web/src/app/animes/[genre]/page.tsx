@@ -1,41 +1,51 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { notFound } from 'next/navigation';
 
 import { useExecuteOnMount } from '@/hooks/useExecuteOnMount';
-import { startConsume } from '@/utils/consumeDatasetStream';
+import { startConsume, stopConsume } from '@/utils/consumeDatasetStream';
 import { ANIME_GENRES, ANIME_GENRES_ICON } from '@/constants/animeGenres';
 
-import { AnimeList } from '@/components/AnimeList';
 import { Section } from '@/components/Section';
+import { AnimeCard } from '@/components/AnimeCard';
 
 interface AnimesByGenrePageProps {
   params: { genre: string };
 }
 
-let abortController = new AbortController();
+let count = 0;
 
 export default function AnimesByGenrePage({
   params: { genre },
 }: AnimesByGenrePageProps) {
-  const [animes, setAnimes] = useState<Anime[]>([]);
+  let abortController = new AbortController();
 
-  if (!ANIME_GENRES[genre]) {
-    notFound();
-  }
+  const [animes, setAnimes] = useState<(Anime & { lastItem?: boolean })[]>([]);
+  const [skip, setSkip] = useState(0);
+  const [offset, setOffset] = useState(30);
+
+  const LENGTH = animes.length;
+  const URL = `${process.env.NEXT_PUBLIC_API_URL}/animes/${genre.replaceAll(
+    '-',
+    ' '
+  )}?timeout=200&skip=${skip}`;
 
   function updateState() {
-    let count = 0;
-
     return new WritableStream({
       write(data) {
         ++count;
-        if (count <= 30) {
-          setAnimes((prev) => {
-            return [...prev, data];
-          });
+
+        if (count === offset) {
+          data.lastItem = true;
+          setSkip(offset);
+          setOffset((prev) => prev + 30);
+          stopConsume(abortController);
         }
+
+        setAnimes((prev) => {
+          return [...prev, data];
+        });
       },
       abort(reason) {
         console.log('aborted', reason);
@@ -43,15 +53,44 @@ export default function AnimesByGenrePage({
     });
   }
 
+  const intersectionObserver = useRef<IntersectionObserver | null>(null);
+
+  const lastAnimeRef = useCallback(
+    (animeCard: HTMLAnchorElement) => {
+      if (intersectionObserver.current) {
+        if (LENGTH === offset) {
+          stopConsume(abortController);
+        }
+
+        intersectionObserver.current.disconnect();
+      }
+
+      intersectionObserver.current = new IntersectionObserver((entries) => {
+        const lastAnimeCard = entries[0];
+
+        if (!lastAnimeCard.isIntersecting) return;
+
+        startConsume(URL, abortController.signal, updateState);
+      });
+
+      if (animeCard) {
+        intersectionObserver.current.observe(animeCard);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [LENGTH, offset, skip, URL]
+  );
+
+  useEffect(() => {
+    count = 0;
+  }, [genre]);
+
+  if (!ANIME_GENRES[genre]) {
+    notFound();
+  }
+
   useExecuteOnMount(() =>
-    startConsume(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/${genre.replaceAll(
-        '-',
-        ' '
-      )}?timeout=200`,
-      abortController.signal,
-      updateState
-    )
+    startConsume(URL, abortController.signal, updateState)
   );
 
   return (
@@ -64,7 +103,19 @@ export default function AnimesByGenrePage({
           </div>
         </Section.Title>
 
-        <AnimeList animes={animes} />
+        <section className="w-full">
+          <div className="grid w-full grid-cols-list place-items-center gap-4">
+            {animes.map((anime, index) => {
+              if (animes.length === index + 1) {
+                return (
+                  <AnimeCard key={anime.id} ref={lastAnimeRef} anime={anime} />
+                );
+              }
+
+              return <AnimeCard key={anime.id} anime={anime} />;
+            })}
+          </div>
+        </section>
       </Section.Container>
     </Section.Root>
   );

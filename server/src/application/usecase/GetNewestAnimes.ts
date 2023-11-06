@@ -8,6 +8,7 @@ export class GetNewestAnimes {
       filePath,
       reply,
       Number(timeout) || 0,
+      0,
       (data: any) => {
         return data.season.split(' ')[1] < 2022;
       }

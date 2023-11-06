@@ -23,6 +23,7 @@ export async function consumeDataset(url: string, signal: AbortSignal) {
   const response = await fetch(url, {
     signal,
   });
+
   if (!response.body) return;
 
   const reader = response.body
@@ -39,8 +40,14 @@ export async function startConsume(
 ) {
   try {
     const readable = await consumeDataset(url, signal);
-    await readable?.pipeTo(updateStateCallback(), { signal: signal });
+    await readable?.pipeTo(updateStateCallback(), { signal });
   } catch (error: any) {
     if (!error.message.includes('abort')) throw error;
   }
+}
+
+export function stopConsume(abortController: AbortController) {
+  abortController.abort();
+  console.log('aborting...');
+  abortController = new AbortController();
 }

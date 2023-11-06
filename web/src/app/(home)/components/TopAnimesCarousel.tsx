@@ -38,7 +38,7 @@ export function TopAnimesCarousel({ slidesAmount }: TopAnimesCarouselProps) {
 
   useExecuteOnMount(() =>
     startConsume(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/top`,
+      `${process.env.NEXT_PUBLIC_API_URL}/animes/top`,
       abortController.signal,
       updateState
     )

@@ -40,7 +40,7 @@ export function NewestAnimesCarousel({
 
   useExecuteOnMount(() =>
     startConsume(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/new`,
+      `${process.env.NEXT_PUBLIC_API_URL}/animes/new`,
       abortController.signal,
       updateState
     )

@@ -12,6 +12,7 @@ export class DatasetStream {
     filePath: string,
     reply: FastifyReply,
     timeout: number,
+    skip: number,
     condition: (data: any) => boolean
   ) {
     const headers = {
@@ -39,6 +40,11 @@ export class DatasetStream {
               const data = JSON.parse(Buffer.from(chunk).toString());
 
               if (condition(data)) return;
+
+              if (items < skip) {
+                items++;
+                return;
+              }
 
               const mappedData = {
                 id: data.anime_id,

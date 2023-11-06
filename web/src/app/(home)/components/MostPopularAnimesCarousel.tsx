@@ -40,7 +40,7 @@ export function MostPopularAnimesCarousel({
 
   useExecuteOnMount(() =>
     startConsume(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/animes/popular`,
+      `${process.env.NEXT_PUBLIC_API_URL}/animes/popular`,
       abortController.signal,
       updateState
     )

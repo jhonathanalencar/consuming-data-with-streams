@@ -8,6 +8,7 @@ export class GetMostPopularAnimes {
       filePath,
       reply,
       Number(timeout) || 0,
+      0,
       (data: any) => {
         return data.popularity_rank > 100;
       }

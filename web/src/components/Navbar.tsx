@@ -25,11 +25,16 @@ export function Navbar() {
 
           <div className="header-actions flex">
             <div className="flex items-center justify-center">
-              <MagnifyingGlass
-                size={32}
-                weight="bold"
-                className="text-yellow-500"
-              />
+              <Link
+                href="/search"
+                className="group rounded-md border-2 border-transparent px-2 py-1 outline-none transition-colors focus-visible:border-yellow-500"
+              >
+                <MagnifyingGlass
+                  size={32}
+                  weight="bold"
+                  className="text-yellow-500 group-focus-visible:text-zinc-100"
+                />
+              </Link>
             </div>
           </div>
         </div>

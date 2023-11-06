@@ -82,14 +82,15 @@ export class DatasetController {
       'get',
       '/animes/new',
       async (
-        params: { query: { timeout?: string } },
+        params: { query: { timeout?: string; skip: number } },
         body: any,
         reply: any
       ) => {
         await this.getNewestAnimes.execute(
           this.filePath,
           reply,
-          params.query.timeout
+          params.query.timeout,
+          params.query.skip
         );
       }
     );

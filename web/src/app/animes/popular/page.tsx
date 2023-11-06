@@ -18,7 +18,7 @@ export default function PopularAnimesPage() {
   const [offset, setOffset] = useState(30);
 
   const LENGTH = animes.length;
-  const URL = `${process.env.NEXT_PUBLIC_API_URL}/animes/popular?timeout=0&skip=${skip}`;
+  const URL = `${process.env.NEXT_PUBLIC_API_URL}/animes/popular?timeout=100&skip=${skip}`;
 
   function updateState() {
     return new WritableStream({
@@ -72,7 +72,7 @@ export default function PopularAnimesPage() {
 
   useExecuteOnMount(() =>
     startConsume(
-      `${process.env.NEXT_PUBLIC_API_URL}/animes/popular?timeout=0`,
+      `${process.env.NEXT_PUBLIC_API_URL}/animes/popular?timeout=100`,
       abortController.signal,
       updateState
     )
